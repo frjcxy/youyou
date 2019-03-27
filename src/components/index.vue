@@ -160,46 +160,20 @@
                     <!--/幻灯片-->
                     <div class="left-220">
                         <ul class="side-img-list">
-                            <li>
+                            <!-- 用动态数据渲染页面 -->
+                            <!-- 'v-bind' directives require an attribute value (vue/valid-v-bind) at src\components\index.vue:164:65: 报错！！ -->
+                            <!--  v-for 后添加 :key='item' 解决报错 -->
+                            <li v-for="(item,index) in toplist" :key="item">
                                 <div class="img-box">
-                                    <label>1</label>
-                                    <img src="http://39.108.135.214:8899/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg">
+                                    <label>{{index+1}}</label>
+                                    <img :src="item.img_url">
                                 </div>
                                 <div class="txt-box">
-                                    <a href="/goods/show-98.html">骆驼男装2017秋季新款运动休闲纯色夹克青年宽松长袖针织开衫卫衣</a>
-                                    <span>2017-09-26</span>
+                                    <a href="/goods/show-98.html">{{item.title}}}</a>
+                                    <span>{{item.add_time}}</span>
                                 </div>
                             </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>2</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200314272543.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a>
-                                    <span>2015-04-20</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>3</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200318534459.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">飞利浦（PHILIPS）DVP3690 全高清DVD影碟机播放器</a>
-                                    <span>2015-04-20</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="img-box">
-                                    <label>4</label>
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200258403759.jpg">
-                                </div>
-                                <div class="txt-box">
-                                    <a href="/goods/show-98.html">三星（SAMSUNG）UA40HU5920JXXZ 40英寸4K超高清</a>
-                                    <span>2015-04-20</span>
-                                </div>
-                            </li>
+                          
                         </ul>
                     </div>
                 </div>
@@ -588,8 +562,29 @@
 </template>
 
 <script>
+//导入axios 发请求
+import axios from'axios';
+
 export default {
-    
+    name:'index',
+    data(){//data是函数还有return
+        return{
+            catelist:[],
+            sliderlist:[],
+            toplist:[]
+        }
+    },
+    created() { //在这个钩子后发请求！！！
+        axios.get('http://111.230.232.110:8899/site/goods/gettopdata/goods')
+        .then(res=>{
+            //console.log(res)
+            //然后请求回数据，在赋值给data的数组
+            this.catelist=res.data.message.catelist
+            this.sliderlist=res.data.message.sliderlist
+            this.toplist=res.data.message.toplist
+            
+        })
+    },
 }
 </script>
 
