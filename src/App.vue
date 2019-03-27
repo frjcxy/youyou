@@ -89,6 +89,7 @@
       </div>
     </div>
     <!-- 中间内容 -->
+    <router-view></router-view>
     <!-- 尾部 -->
     <div class="footer">
       <div class="section">
