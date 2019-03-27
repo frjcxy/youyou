@@ -183,7 +183,7 @@
             <div class="main-tit">
                 <h2>{{item.catetitle}}</h2>
                 <p>
-                    <a href="/goods/43.html" v-for="it in item.level2catelist" :key="it">{{it.subcatetitle}}</a>
+                    <a href="/goods/43.html" v-for="it in item.level2catelist">{{it.subcatetitle}}</a>
                     <a href="/goods/40.html">更多
                         <i>+</i>
                     </a>
@@ -192,8 +192,11 @@
             <div class="wrapper clearfix">
                 <div class="wrap-box">
                     <ul class="img-list">
-                        <li  v-for='it in item.datas' :key="it">
-                            <a href="#/site/goodsinfo/87" class="">
+                        
+                        <li  v-for='it in item.datas'>
+                            <!-- <a href="#/site/goodsinfo/87" class=""> -->
+                            <!-- 点击跳转详情页 -->
+                        <router-link :to="'/detail/'+it.artID">
                                 <div class="img-box">
                                     <img :src="it.img_url">
                                 </div>
@@ -208,9 +211,10 @@
                                         </span>
                                     </p>
                                 </div>
-                            </a>
+                            <!-- </a> -->
+                                  </router-link>
                         </li>
-                    
+              
                        
                     </ul>
                 </div>
@@ -230,8 +234,8 @@ export default {
     data(){//data是函数还有return
         return{
             catelist:[],
-            sliderlist:[],
-            toplist:[],
+            sliderlist:[],//轮播图数据
+            toplist:[],//右侧热门商品数据
             //底部商品数据
             goodList:[]
         }
@@ -251,6 +255,7 @@ export default {
             this.toplist=res.data.message.toplist
             
         });
+        //这里是底部商品数据请求
         axios.get('http://111.230.232.110:8899/site/goods/getgoodsgroup')
         .then(res=>{
             // console.log(res)
