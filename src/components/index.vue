@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="txt-box">
                                     <a href="/goods/show-98.html">{{item.title}}}</a>
-                                    <span>{{item.add_time}}</span>
+                                    <span>{{item.add_time | formatTime}}</span>
                                 </div>
                             </li>
                           
@@ -564,6 +564,8 @@
 <script>
 //导入axios 发请求
 import axios from'axios';
+//导入moment 格式化日期
+import moment from'moment';
 
 export default {
     name:'index',
@@ -572,6 +574,11 @@ export default {
             catelist:[],
             sliderlist:[],
             toplist:[]
+        }
+    },
+    filters:{//过滤器，用来修改日期的
+        formatTime(value){
+            return moment(value).format('YYYY-MM-DD')//用的是moment.js处理数据
         }
     },
     created() { //在这个钩子后发请求！！！
