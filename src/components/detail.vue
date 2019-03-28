@@ -96,22 +96,26 @@
                     </div>
                     <div class="conn-box">
                       <div class="editor">
+                          <!-- 在这里绑定数据 -->
                         <textarea
                           id="txtContent"
                           name="txtContent"
                           sucmsg=" "
                           data-type="*10-1000"
                           nullmsg="请填写评论内容！"
+                          v-model="comment"
                         ></textarea>
                         <span class="Validform_checktip"></span>
                       </div>
                       <div class="subcon">
+                          <!-- 这里绑定事件 -->
                         <input
                           id="btnSubmit"
                           name="submit"
                           type="submit"
                           value="提交评论"
                           class="submit"
+                          @click="postComment"
                         >
                         <span class="Validform_checktip"></span>
                       </div>
@@ -204,7 +208,9 @@ export default {
       hotgoodlist: [],
       num1: 1,
       //图片数组
-      imglist: []
+      imglist: [],
+      //评论
+      comment:''
     };
   },
   methods: {
@@ -222,6 +228,23 @@ export default {
     },
     handleChange() {
       console.log(123);
+    },
+    //评论发请求
+    postComment(){
+        if(this.comment===""){
+            this.$message.error('写点东西可好');
+        }else{
+              this.$axios
+              .post(`site/validate/comment/post/goods/${this.$route.params.id}`,{
+            commenttxt:this.comment
+         })
+         .then(res=>{
+             if(res.data.status===0){
+                 this.$message.success(res.data.message);
+                 this.comment=""
+             }
+         })
+        }
     }
   },
   //钩子
@@ -241,8 +264,8 @@ export default {
 
 <style>
 .pic-box {
-  width: 395px;
-  height: 320px;
+  width: 390px;
+  height: 300px;
 }
 .pic-box .el-carousel {
   width: 100%;
