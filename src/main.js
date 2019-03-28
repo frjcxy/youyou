@@ -11,12 +11,12 @@ Vue.prototype.$axios=axios;
 //抽取基地址 全局
 axios.defaults.baseURL='http://111.230.232.110:8899'//设置地址
 
-//抽取全局过滤器
+//抽取全局过滤器，需要在Vue实例之前
 //导入moment 格式化日期
 import moment from'moment';
 Vue.filter('globalFormatTime',function(value,fmtTemplate) { //如果传参 就用传递的模板
       if(fmtTemplate){
-          return moment(value).format(fmtTemplate)
+          return moment(value).format(fmtTemplate) //例如'YYYY年MM月DD日'
       }else{
         return moment(value).format('YYYY-MM-DD')
       }
