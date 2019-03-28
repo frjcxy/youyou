@@ -225,7 +225,7 @@
 
 <script>
 //导入axios 发请求
-import axios from'axios';
+// import axios from'axios';
 //导入moment 格式化日期
 import moment from'moment';
 
@@ -246,7 +246,7 @@ export default {
         }
     },
     created() { //在这个钩子后发请求！！！
-        axios.get('http://111.230.232.110:8899/site/goods/gettopdata/goods')
+        this.$axios.get('/site/goods/gettopdata/goods')
         .then(res=>{
             //console.log(res)
             //然后请求回数据，在赋值给data的数组
@@ -256,7 +256,7 @@ export default {
             
         });
         //这里是底部商品数据请求
-        axios.get('http://111.230.232.110:8899/site/goods/getgoodsgroup')
+        this.$axios.get('/site/goods/getgoodsgroup')
         .then(res=>{
             // console.log(res)
             this.goodList=res.data.message

@@ -24,6 +24,7 @@
               <strong>|</strong>
             </span>
             <!-- <a href class> -->
+              <!-- 这里用路由跳转购物车页面 -->
               <router-link to="/cart">
               <i class="iconfont icon-cart"></i>购物车(
               <span id="shoppingCartCount">
@@ -69,7 +70,7 @@
                 </a>
               </li>
               <li class="goods">
-                <a href class="router-link-exact-active">
+                <a href='#'>
                   <span class="out" style="top: 0px;">购物商城</span>
                 </a>
               </li>
