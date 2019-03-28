@@ -165,7 +165,7 @@
                                             {{it.title}}
                                             </router-link>
                                             <!-- </a> -->
-                                            <span>{{it.add_time|formatTime}}</span>
+                                            <span>{{it.add_time| globalFormatTime('YYYY年MM月DD日')}}</span>
                                         </div>
                                     </li>
                                 </ul>

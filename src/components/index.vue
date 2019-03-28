@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="txt-box">
                                     <a href="/goods/show-98.html">{{item.title}}}</a>
-                                    <span>{{item.add_time | formatTime}}</span>
+                                    <span>{{item.add_time | globalFormatTime}}</span>
                                 </div>
                             </li>
                           
@@ -227,7 +227,7 @@
 //导入axios 发请求
 // import axios from'axios';
 //导入moment 格式化日期
-import moment from'moment';
+// import moment from'moment';
 
 export default {
     name:'index',
@@ -240,13 +240,13 @@ export default {
             goodList:[]
         }
     },
-    filters:{//过滤器，用来修改日期的
-        formatTime(value){
-            return moment(value).format('YYYY-MM-DD')//用的是moment.js处理数据
-        }
-    },
+    // filters:{//过滤器，用来修改日期的
+    //     formatTime(value){
+    //         return moment(value).format('YYYY-MM-DD')//用的是moment.js处理数据
+    //     }
+    // },
     created() { //在这个钩子后发请求！！！
-        this.$axios.get('/site/goods/gettopdata/goods')
+        this.$axios.get('http://111.230.232.110:8899/site/goods/gettopdata/goods')
         .then(res=>{
             //console.log(res)
             //然后请求回数据，在赋值给data的数组
@@ -256,7 +256,7 @@ export default {
             
         });
         //这里是底部商品数据请求
-        this.$axios.get('/site/goods/getgoodsgroup')
+        this.$axios.get('http://111.230.232.110:8899/site/goods/getgoodsgroup')
         .then(res=>{
             // console.log(res)
             this.goodList=res.data.message
