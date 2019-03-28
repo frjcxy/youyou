@@ -127,10 +127,18 @@
               <li v-for="(item,index) in toplist" :key="item">
                 <div class="img-box">
                   <label>{{index+1}}</label>
+                  <!-- //拿到商品id点击跳转到详情页面 -->
+                   <router-link :to="'/detail/'+item.id">
                   <img :src="item.img_url">
+                   </router-link>
                 </div>
                 <div class="txt-box">
-                  <a href="/goods/show-98.html">{{item.title}}}</a>
+                  <!-- <a href="/goods/show-98.html"> -->
+                  <!-- //拿到商品id点击跳转到详情页面 -->
+                   <router-link :to="'/detail/'+item.id">
+                  {{item.title}}}
+                   </router-link>
+                  <!-- </a> -->
                   <span>{{item.add_time | globalFormatTime}}</span>
                 </div>
               </li>
@@ -211,7 +219,7 @@ export default {
     this.$axios
       .get("http://111.230.232.110:8899/site/goods/gettopdata/goods")
       .then(res => {
-        // console.log(res)
+        console.log(res)
         //然后请求回数据，在赋值给data的数组
         this.catelist = res.data.message.catelist;
         this.sliderlist = res.data.message.sliderlist;
