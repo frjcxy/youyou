@@ -40,35 +40,7 @@
                     <dt>购买数量</dt>
                     <dd>
                       <div class="stock-box">
-                        <div class="el-input-number el-input-number--small">
-                          <span role="button" class="el-input-number__decrease is-disabled">
-                            <i class="el-icon-minus"></i>
-                          </span>
-                          <span role="button" class="el-input-number__increase">
-                            <i class="el-icon-plus"></i>
-                          </span>
-                          <div class="el-input el-input--small">
-                            <!---->
-                            <input
-                              autocomplete="off"
-                              size="small"
-                              type="text"
-                              rows="2"
-                              max="60"
-                              min="1"
-                              validateevent="true"
-                              class="el-input__inner"
-                              role="spinbutton"
-                              aria-valuemax="60"
-                              aria-valuemin="1"
-                              aria-valuenow="1"
-                              aria-disabled="false"
-                            >
-                            <!---->
-                            <!---->
-                            <!---->
-                          </div>
-                        </div>
+                         <el-input-number v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
                       </div>
                       <span class="stock-txt">
                         库存
@@ -216,7 +188,8 @@ export default {
       goodsinfo: {},
       index: 1,
       //右侧热门商品
-      hotgoodlist: []
+      hotgoodlist: [],
+      num1:1
     };
   },
   methods: {
@@ -230,7 +203,10 @@ export default {
             this.hotgoodlist = res.data.message.hotgoodslist
         //   console.log((this.hotgoodlist = res.data.message.hotgoodslist));
         });
-    }
+    },
+     handleChange() {
+         console.log(123)
+      }
   },
   //钩子
   created() {
@@ -238,7 +214,7 @@ export default {
   },
   //侦听器
   watch: {
-      //单词呀！！！是$route！！
+      //单词呀！！
       $route(value,oldvalue){
           console.log(value)
         this.getDetail();

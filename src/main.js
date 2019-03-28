@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 // import style from './assets/site/css/style.css'
 import './assets/site/css/style.css'
+//饿了么ui导入
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 // 导入axios 抽取全局
 //这样其他的页面需要axios就不需要引入了，直接this.$axios使用
