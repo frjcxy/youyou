@@ -160,7 +160,7 @@
               <div class="sidebar-box">
                 <h4>推荐商品</h4>
                 <ul class="side-img-list">
-                  <li v-for="it in hotgoodlist">
+                  <li v-for="(it,index) in hotgoodlist " :key='index'>
                     <div class="img-box">
                       <!-- <a href="#/site/goodsinfo/90" class=""> -->
                       <router-link :to="'/detail/'+it.id">
@@ -284,8 +284,8 @@ export default {
   //侦听器
   watch: {
     //单词呀！！
-    $route(value, oldvalue) {
-      //   console.log(value);
+    $route(value) {
+        console.log(value);
       this.getDetail();
     }
   }

@@ -143,7 +143,7 @@
       <div class="main-tit">
         <h2>{{item.catetitle}}</h2>
         <p>
-          <a href="/goods/43.html" v-for="it in item.level2catelist">{{it.subcatetitle}}</a>
+          <a href="/goods/43.html" v-for="(it,index) in item.level2catelist" :key="index">{{it.subcatetitle}}</a>
           <a href="/goods/40.html">
             更多
             <i>+</i>
@@ -153,7 +153,7 @@
       <div class="wrapper clearfix">
         <div class="wrap-box">
           <ul class="img-list">
-            <li v-for="it in item.datas">
+            <li v-for="(it,index) in item.datas" :key="index">
               <!-- <a href="#/site/goodsinfo/87" class=""> -->
               <!-- 点击跳转详情页 -->
               <router-link :to="'/detail/'+it.artID">
@@ -211,7 +211,7 @@ export default {
     this.$axios
       .get("http://111.230.232.110:8899/site/goods/gettopdata/goods")
       .then(res => {
-        console.log(res)
+        // console.log(res)
         //然后请求回数据，在赋值给data的数组
         this.catelist = res.data.message.catelist;
         this.sliderlist = res.data.message.sliderlist;
