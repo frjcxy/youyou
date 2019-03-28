@@ -13,9 +13,9 @@
         <div class="wrap-box">
           <div class="left-925">
             <div class="goods-box clearfix">
-                <!-- 详情轮播图 -->
+              <!-- 详情轮播图 -->
               <div class="pic-box">
-                <el-carousel >
+                <el-carousel>
                   <el-carousel-item v-for="(item,index) in imglist" :key="index">
                     <img :src="item.thumb_path" alt>
                   </el-carousel-item>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="conn-box">
                       <div class="editor">
-                          <!-- 在这里绑定数据 -->
+                        <!-- 在这里绑定数据 -->
                         <textarea
                           id="txtContent"
                           name="txtContent"
@@ -108,7 +108,7 @@
                         <span class="Validform_checktip"></span>
                       </div>
                       <div class="subcon">
-                          <!-- 这里绑定事件 -->
+                        <!-- 这里绑定事件 -->
                         <input
                           id="btnSubmit"
                           name="submit"
@@ -126,37 +126,30 @@
                       style="margin: 5px 0px 15px 69px; line-height: 42px; text-align: center; border: 1px solid rgb(247, 247, 247);"
                     >暂无评论，快来抢沙发吧！</p>
                     <!-- 评论 -->
-                    <li>
+                    <li v-for="(iten,index) in commentList" :key="index">
                       <div class="avatar-box">
                         <i class="iconfont icon-user-full"></i>
                       </div>
                       <div class="inner-box">
                         <div class="info">
-                          <span>匿名用户</span>
-                          <span>2017/10/23 14:58:59</span>
+                          <span>{{iten.user_name}}</span>
+                          <span>{{iten.add_time | globalFormatTime('YYYY-MM-DDTHH:mm:ss')}}</span>
                         </div>
-                        <p>testtesttest</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="avatar-box">
-                        <i class="iconfont icon-user-full"></i>
-                      </div>
-                      <div class="inner-box">
-                        <div class="info">
-                          <span>匿名用户</span>
-                          <span>2017/10/23 14:59:36</span>
-                        </div>
-                        <p>很清晰调动单很清晰调动单</p>
+                        <p>{{iten.content}}</p>
                       </div>
                     </li>
                   </ul>
                   <div class="page-box" style="margin: 5px 0px 0px 62px;">
-                    <div id="pagination" class="digg">
-                      <span class="disabled">« 上一页</span>
-                      <span class="current">1</span>
-                      <span class="disabled">下一页 »</span>
-                    </div>
+                      <!-- y用饿了么插件的分页 -->
+                    <el-pagination
+                      @size-change="handleSizeChange"
+                      @current-change="handleCurrentChange"
+                      :current-page="currentPage4"
+                      :page-sizes="[10, 20, 30, 40]"
+                      :page-size="pageSize"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total="totalcount"
+                    ></el-pagination>
                   </div>
                 </div>
               </div>
@@ -209,8 +202,16 @@ export default {
       num1: 1,
       //图片数组
       imglist: [],
-      //评论
-      comment:''
+      //发评论
+      comment: "",
+      //评论数组
+      commentList: [],
+      //页码
+      pageIndex: 1,
+      //也容量
+      pageSize: 10,
+      //总条数
+      totalcount: ""
     };
   },
   methods: {
@@ -219,7 +220,7 @@ export default {
       this.$axios
         .get(`/site/goods/getgoodsinfo/${this.$route.params.id}`)
         .then(res => {
-          console.log(res);
+          //   console.log(res);
           this.goodsinfo = res.data.message.goodsinfo;
           this.hotgoodlist = res.data.message.hotgoodslist;
           //   console.log((this.hotgoodlist = res.data.message.hotgoodslist));
@@ -230,26 +231,55 @@ export default {
       console.log(123);
     },
     //评论发请求
-    postComment(){
-        if(this.comment===""){
-            this.$message.error('写点东西可好');
-        }else{
-              this.$axios
-              .post(`site/validate/comment/post/goods/${this.$route.params.id}`,{
-            commenttxt:this.comment
-         })
-         .then(res=>{
-             if(res.data.status===0){
-                 this.$message.success(res.data.message);
-                 this.comment=""
-             }
-         })
-        }
+    postComment() {
+      if (this.comment === "") {
+        this.$message.error("写点东西可好");
+      } else {
+        this.$axios
+          .post(`site/validate/comment/post/goods/${this.$route.params.id}`, {
+            commenttxt: this.comment
+          })
+          .then(res => {
+            if (res.data.status === 0) {
+              this.$message.success(res.data.message);
+              this.getComment();
+              this.comment = "";
+            }
+          });
+      }
+    },
+    //获取评论请求
+    getComment() {
+      this.$axios
+        .get(
+          `site/comment/getbypage/goods/${this.$route.params.id}?pageIndex=${
+            this.pageIndex
+          }&pageSize=${this.pageSize}`
+        )
+        .then(res => {
+          // console.log(res);
+          this.totalcount = res.data.totalcount;
+          this.commentList = res.data.message;
+        });
+    },
+    //页容量改变
+    handleSizeChange(size){
+        this.pageSize=size;
+        this.getComment()
+    },
+    //页码改变
+    handleCurrentChange(current){
+        this.pageIndex=current;
+        this.getComment()
+        
     }
   },
   //钩子
   created() {
+    //获取详情方法
     this.getDetail();
+    //获取评论方法
+    this.getComment();
   },
   //侦听器
   watch: {
