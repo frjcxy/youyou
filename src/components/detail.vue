@@ -13,7 +13,14 @@
         <div class="wrap-box">
           <div class="left-925">
             <div class="goods-box clearfix">
-              <div class="pic-box"></div>
+                <!-- 详情轮播图 -->
+              <div class="pic-box">
+                <el-carousel >
+                  <el-carousel-item v-for="(item,index) in imglist" :key="index">
+                    <img :src="item.thumb_path" alt>
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
               <div class="goods-spec">
                 <h1>{{goodsinfo.title}}</h1>
                 <p class="subtitle">{{goodsinfo.sub_title}}</p>
@@ -40,7 +47,13 @@
                     <dt>购买数量</dt>
                     <dd>
                       <div class="stock-box">
-                         <el-input-number v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                        <el-input-number
+                          v-model="num1"
+                          @change="handleChange"
+                          :min="1"
+                          :max="10"
+                          label="描述文字"
+                        ></el-input-number>
                       </div>
                       <span class="stock-txt">
                         库存
@@ -182,14 +195,16 @@
 // import moment from'moment';
 
 export default {
-    name: "detail",
+  name: "detail",
   data() {
     return {
       goodsinfo: {},
       index: 1,
       //右侧热门商品
       hotgoodlist: [],
-      num1:1
+      num1: 1,
+      //图片数组
+      imglist: []
     };
   },
   methods: {
@@ -198,30 +213,48 @@ export default {
       this.$axios
         .get(`/site/goods/getgoodsinfo/${this.$route.params.id}`)
         .then(res => {
-        //   console.log(res);
+          console.log(res);
           this.goodsinfo = res.data.message.goodsinfo;
-            this.hotgoodlist = res.data.message.hotgoodslist
-        //   console.log((this.hotgoodlist = res.data.message.hotgoodslist));
+          this.hotgoodlist = res.data.message.hotgoodslist;
+          //   console.log((this.hotgoodlist = res.data.message.hotgoodslist));
+          this.imglist = res.data.message.imglist;
         });
     },
-     handleChange() {
-         console.log(123)
-      }
+    handleChange() {
+      console.log(123);
+    }
   },
   //钩子
   created() {
-      this.getDetail();
+    this.getDetail();
   },
   //侦听器
   watch: {
-      //单词呀！！
-      $route(value,oldvalue){
-          console.log(value)
-        this.getDetail();
-      }
+    //单词呀！！
+    $route(value, oldvalue) {
+      //   console.log(value);
+      this.getDetail();
+    }
   }
 };
 </script>
 
 <style>
+.pic-box {
+  width: 395px;
+  height: 320px;
+}
+.pic-box .el-carousel {
+  width: 100%;
+  height: 100%;
+}
+.pic-box .el-carousel__container {
+  width: 100%;
+  height: 100%;
+}
+.pic-box .el-carousel__container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 </style>

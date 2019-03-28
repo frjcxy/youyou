@@ -110,8 +110,10 @@
           <div class="left-705">
             <div class="banner-img">
               <el-carousel height="410px">
-                <el-carousel-item  class="indexslider" v-for="(item,index) in sliderlist " :key="index">
+                <el-carousel-item   v-for="(item,index) in sliderlist " :key="index">
+                    <router-link class="indexslider" :to="'/detail/'+item.id">
                     <img class="indexsl" :src="item.img_url" alt="">
+                    </router-link>
                 </el-carousel-item>
               </el-carousel>
             </div>
