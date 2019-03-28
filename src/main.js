@@ -4,6 +4,7 @@ import App from './App.vue'
 import './assets/site/css/style.css'
 
 // 导入axios 抽取全局
+//这样其他的页面需要axios就不需要引入了，直接this.$axios使用
 import axios from 'axios';
 Vue.prototype.$axios=axios;
 

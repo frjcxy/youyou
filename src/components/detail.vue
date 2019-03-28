@@ -153,12 +153,18 @@
                                 <ul class="side-img-list">
                                     <li v-for='it in hotgoodlist'>
                                         <div class="img-box">
-                                            <a href="#/site/goodsinfo/90" class="">
+                                            <!-- <a href="#/site/goodsinfo/90" class=""> -->
+                                            <router-link :to="'/detail/'+it.id">
                                                 <img :src="it.img_url">
-                                            </a>
+                                                </router-link>
+                                            <!-- </a> -->
                                         </div>
                                         <div class="txt-box">
-                                            <a href="#/site/goodsinfo/90" class="">{{it.title}}</a>
+                                            <!-- <a href="#/site/goodsinfo/90" class=""> -->
+                                            <router-link :to="'/detail/'+it.id">
+                                            {{it.title}}
+                                            </router-link>
+                                            <!-- </a> -->
                                             <span>{{it.add_time|formatTime}}</span>
                                         </div>
                                     </li>
