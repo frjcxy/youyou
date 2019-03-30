@@ -1,7 +1,7 @@
 <template>
     <div id="box">
         <h1>看我！！！</h1>
-        <img src="../assets/突突突.png" alt="">
+        <img src="../../assets/突突突.png" alt="">
     </div>
 </template>
 
